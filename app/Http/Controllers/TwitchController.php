@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\TwitchService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TwitchController extends Controller
 {
     public function handleTwitchCallback(Request $request, TwitchService $twitchService)
     {
         $userData = $twitchService->handleCallback($request->query('code'));
-        return response()->json($userData);
+        $user = User::where(['twitch_id' => $userData['twitch_id']])->first();
+        if(Auth::loginUsingId($user->id)) {
+            $token = $user->createToken('login')->plainTextToken;
+        }
+        return response()->json([...$userData, 'token' => $token]);
     }
 
     public function getAuthUrl(Request $request) {

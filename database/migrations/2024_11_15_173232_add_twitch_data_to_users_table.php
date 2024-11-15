@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string("login");
             $table->string("display_name");
             $table->string("profile_image_url");
-            $table->string("access_token");
-            $table->string("refresh_token");
+            $table->string("twitch_access_token");
+            $table->string("twitch_refresh_token");
             $table->datetime("expires_in");
         });
     }

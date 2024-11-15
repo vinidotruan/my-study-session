@@ -57,8 +57,8 @@ class TwitchService
                 'email' => $userData['data'][0]['email'],
                 'display_name' => $userData['data'][0]['display_name'],
                 'profile_image_url' => $userData['data'][0]['profile_image_url'],
-                'access_token' => $tokenData['access_token'],
-                'refresh_token' => $tokenData['refresh_token'],
+                'twitch_access_token' => $tokenData['access_token'],
+                'twitch_refresh_token' => $tokenData['refresh_token'],
                 'expires_in' => now()->addSeconds($tokenData['expires_in']),
             ]
         );
