@@ -3,22 +3,22 @@
 namespace App\Events;
 
 use App\Models\StudySession;
-use Illuminate\Broadcasting\Channel;
+use App\Models\User;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StartSession
+class StartSession implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, ShouldBroadcast;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
     private $timer;
     /**
      * Create a new event instance.
      */
-    public function __construct(private User $user,public StudySession $studySession)
+    public function __construct(private readonly User $user, public StudySession $studySession)
     {
         //
     }
