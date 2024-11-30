@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Jobs\FinalizeSession;
 use App\Models\StudySession;
 use App\Models\User;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -11,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StartSession implements ShouldBroadcast
+class EndSession implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,7 +20,6 @@ class StartSession implements ShouldBroadcast
      */
     public function __construct(private readonly User $user, public StudySession $studySession)
     {
-        //
     }
 
     /**
@@ -38,12 +36,12 @@ class StartSession implements ShouldBroadcast
 
     public function broadcastAs(): string
     {
-        return 'session.started';
+        return 'session.ended';
     }
 
     public function broadcastWith(): array
     {
-        FinalizeSession::dispatch($this->user, $this->studySession)->delay(now()->addSeconds(10));
-        return ["teste"];
+       return ["Aa"];
     }
+
 }

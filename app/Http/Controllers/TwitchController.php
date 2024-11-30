@@ -16,11 +16,13 @@ class TwitchController extends Controller
         if(Auth::loginUsingId($user->id)) {
             $token = $user->createToken('login')->plainTextToken;
         }
-        return response()->json([...$userData, 'token' => $token]);
+        return response()->json([...$userData, 'token' => $token, 'user' => $user]);
     }
 
     public function getAuthUrl(Request $request) {
-        return response()->json("https://id.twitch.tv/oauth2/authorize?force_verify=true&client_id=od9y5mt2nzyh03zwdfsl86g8nwb2x3&response_type=code&redirect_uri=http://localhost:8000/api/auth/callback&scope=user:read:email&claims=email");
+        $client_id = config('services.twitch.client_id');
+        $redirect_uri = config('services.twitch.redirect_uri');
+        return response()->json("https://id.twitch.tv/oauth2/authorize?force_verify=true&client_id={$client_id}&response_type=code&redirect_uri={$redirect_uri}&scope=user:read:email&claims=email");
     }
 
     /**
