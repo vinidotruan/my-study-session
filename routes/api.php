@@ -11,10 +11,12 @@ Route::get("auth/url", [TwitchController::class, 'getAuthUrl']);
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::prefix('sessions')->group(function () {
+        Route::post('', [StudySessionController::class, 'store']);
         Route::post('{id}/start', [StudySessionController::class, 'start']);
         Route::get('{studySession:uri}', [StudySessionController::class, 'show']);
         Route::get('', [StudySessionController::class, 'index']);
     });
+    Route::post('auth/logout', [TwitchController::class, 'logout']);
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

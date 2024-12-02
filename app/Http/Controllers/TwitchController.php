@@ -25,12 +25,11 @@ class TwitchController extends Controller
         return response()->json("https://id.twitch.tv/oauth2/authorize?force_verify=true&client_id={$client_id}&response_type=code&redirect_uri={$redirect_uri}&scope=user:read:email&claims=email");
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function getFollowedChannels(Request $request, TwitchService $twitchService): JsonResponse
+    public function logout(Request $request, TwitchService $twitchService)
     {
-        $data = $twitchService->handleFollowedChannels();
-        return response()->json($data);
+        auth()->user()->currentAccessToken()->delete();
+        $twitchService->logout();
+
+        return response()->json(['data' => 'success']);
     }
 }

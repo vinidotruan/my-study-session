@@ -69,15 +69,17 @@ class TwitchService
         ];
     }
 
-    public function handleFollowedChannels(): \Illuminate\Http\JsonResponse
-    {
-        $userId = session('twitch_id');
-        $response = Http::get(`https://api.twitch.tv/helix/channels/followed?user_id=$userId`);
+    public function logout() {
+        $response = Http::asForm()->post('https://id.twitch.tv/oauth2/revoke', [
+            'client_id' => $this->clientId,
+            'token' => auth()->user()->twitch_access_token
+        ]);
 
         if(!$response->successful()) {
-            throw new Exception('Falha ao obter canais seguidos: ' . $response->body());
+            throw new Exception("Error Processing Request", $response->body());
         }
 
-        return response()->json();
+        return true;
+
     }
 }
