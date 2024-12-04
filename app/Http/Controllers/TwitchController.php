@@ -20,6 +20,7 @@ class TwitchController extends Controller
     }
 
     public function getAuthUrl(Request $request) {
+        return response()->json("teste");
         $client_id = config('services.twitch.client_id');
         $redirect_uri = config('services.twitch.redirect_uri');
         return response()->json("https://id.twitch.tv/oauth2/authorize?force_verify=true&client_id={$client_id}&response_type=code&redirect_uri={$redirect_uri}&scope=user:read:email&claims=email");
