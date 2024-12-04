@@ -73,8 +73,8 @@ services:
             SOKETI_DEFAULT_APP_ID: '${PUSHER_APP_ID}'
             SOKETI_DEFAULT_APP_KEY: '${PUSHER_APP_KEY}'
             SOKETI_DEFAULT_APP_SECRET: '${PUSHER_APP_SECRET}'
-            SOKETI_SSL_CERT: '${SOKETI_SSL_CERT}',
-            SOKETI_SSL_KEY: '${SOKETI_SSL_KEY}',
+            SOKETI_SSL_CERT: '${SOKETI_SSL_CERT}'
+            SOKETI_SSL_KEY: '${SOKETI_SSL_KEY}'
             SOKETI_SSL_CA: '${SOKETI_SSL_CA}'
         ports:
             - '${PUSHER_PORT:-6001}:6001'
