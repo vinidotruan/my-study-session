@@ -13,4 +13,9 @@ class Partners extends Model
     {
         return $this->belongsTo(StudySession::class, 'session_id', 'id');
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'partner_id', 'id');
+    }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,8 +44,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $with = ['followedSessions'];
+
     public function studySessions(): HasMany
     {
         return $this->hasMany(StudySession::class);
+    }
+
+    public function followedSessions(): BelongsToMany
+    {
+        return $this->belongsToMany(StudySession::class, Partners::class, 'partner_id', 'session_id');
     }
 }

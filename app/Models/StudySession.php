@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class StudySession extends Model
 {
@@ -17,6 +18,11 @@ class StudySession extends Model
 
     public function partners(): HasMany
     {
-        return $this->hasMany(Partners::class);
+        return $this->hasMany(Partners::class, 'session_id', 'id');
+    }
+
+    public function waitingRoom(): HasOne
+    {
+        return $this->hasOne(WaitingRoom::class, 'session_id');
     }
 }

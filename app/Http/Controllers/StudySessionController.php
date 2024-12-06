@@ -6,7 +6,6 @@ use App\Events\StartSession;
 use App\Http\Requests\StudySession\StoreSessionRequest;
 use App\Models\StudySession;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class StudySessionController extends Controller
 {
@@ -39,7 +38,6 @@ class StudySessionController extends Controller
      */
     public function show(StudySession $studySession)
     {
-        Log::info("caiu aqui dog");
         return response()->json($studySession);
     }
 
