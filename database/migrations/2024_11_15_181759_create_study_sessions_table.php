@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->integer('minutes')->nullable();
             $table->integer('rest_minutes')->nullable();
-            $table->integer('counter')->nullable();
+            $table->boolean('on_going')->default(false);
             $table->string('name');
             $table->string('uri')->unique();
             $table->timestamps();

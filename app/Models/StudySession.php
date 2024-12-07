@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class StudySession extends Model
 {
-    protected $fillable = ['user_id', 'minutes', 'rest_minutes', 'counter', 'name', 'uri'];
+    protected $fillable = ['user_id', 'minutes', 'rest_minutes', 'on_going', 'name', 'uri'];
+    protected $with = ['waitingRoom'];
 
     public function user(): BelongsTo
     {

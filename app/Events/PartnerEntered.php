@@ -40,6 +40,6 @@ class PartnerEntered implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
-        return [$this->session->waitingRoom->waiters];
+        return [...$this->session->waitingRoom->waiters];
     }
 }

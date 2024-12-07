@@ -29,8 +29,9 @@ class StudySessionController extends Controller
 
     public function start(Request $request, StudySession $id)
     {
+        $id->update(['on_going' => true]);
         StartSession::dispatch(auth()->user(), $id);
-        return response()->json(['session started' => $id]);
+        return response()->json($id);
     }
 
     /**

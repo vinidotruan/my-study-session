@@ -21,7 +21,6 @@ class StartSession implements ShouldBroadcast
      */
     public function __construct(private readonly User $user, public StudySession $studySession)
     {
-        //
     }
 
     /**
@@ -43,7 +42,8 @@ class StartSession implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
-        FinalizeSession::dispatch($this->user, $this->studySession)->delay(now()->addSeconds(10));
-        return ["teste"];
+        FinalizeSession::dispatch($this->user, $this->studySession)
+            ->delay(now()->addMinutes($this->studySession->minutes));
+        return [];
     }
 }

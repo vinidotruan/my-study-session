@@ -61,7 +61,6 @@ class PartnersController extends Controller
         $user = User::find($userId);
         $session = StudySession::find($sessionId);
 
-        Log::info("Session entered: ", [$session]);
         $waitingRoom = WaitingRoom::firstOrCreate(['session_id' => $sessionId])->first();
         if($waitingRoom) {
             $waiters = $waitingRoom->waiters ?? [];
