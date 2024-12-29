@@ -29,6 +29,7 @@ class EndSession implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
+        $this->studySession->update(['on_going' => false]);
         return [
             new PrivateChannel('session.'.$this->studySession->id),
         ];
