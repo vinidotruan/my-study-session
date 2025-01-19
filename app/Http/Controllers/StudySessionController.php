@@ -6,6 +6,7 @@ use App\Events\PartnerEntered;
 use App\Events\StartSession;
 use App\Http\Requests\StudySession\StoreSessionRequest;
 use App\Models\StudySession;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -25,8 +26,8 @@ class StudySessionController extends Controller
      */
     public function store(StoreSessionRequest $request): JsonResponse
     {
-        StudySession::create($request->all());
-        return $this->index();
+            StudySession::create($request->all());
+            return $this->index();
     }
 
     public function start(Request $request, StudySession $id): JsonResponse

@@ -26,7 +26,7 @@ class StoreSessionRequest extends FormRequest
             'minutes' => ['integer'],
             'rest_minutes' => ['integer'],
             'name' => ['required', 'string'],
-            'uri' => ['required', 'string']
+            'uri' => ['required', 'string', 'unique:study_sessions,uri']
         ];
     }
 }
