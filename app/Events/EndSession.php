@@ -42,7 +42,7 @@ class EndSession implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
-       return ["Aa"];
+       return $this->studySession->toArray();
     }
 
 }

@@ -9,7 +9,7 @@ use App\Models\StudySession;
 use App\Models\User;
 use App\Models\WaitingRoom;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class PartnersController extends Controller
 {
@@ -27,8 +27,7 @@ class PartnersController extends Controller
     public function store(Request $request)
     {
         $partner = Partners::firstOrCreate(['partner_id' => $request->get('partner_id')],$request->all());
-        PartnerEntered::dispatch($partner->session);
-        return response()->json(['data' => $partner->session]);
+        return $this->followerEntered($request);
     }
 
 
@@ -51,7 +50,6 @@ class PartnersController extends Controller
         PartnerLeaved::dispatch($session);
 
         return response()->json(['data' => 'Owner notified']);
-
     }
 
     public function followerEntered(Request $request)
@@ -60,8 +58,8 @@ class PartnersController extends Controller
         $userId = $request->get('partner_id');
         $user = User::find($userId);
         $session = StudySession::find($sessionId);
+        $waitingRoom = WaitingRoom::firstOrCreate(['session_id' => $sessionId]);
 
-        $waitingRoom = WaitingRoom::firstOrCreate(['session_id' => $sessionId])->first();
         if($waitingRoom) {
             $waiters = $waitingRoom->waiters ?? [];
             $isWaiting = collect($waitingRoom->waiters)->contains('id', $userId);
@@ -73,7 +71,7 @@ class PartnersController extends Controller
         }
         PartnerEntered::dispatch($session);
 
-        return response()->json(['data' => 'Owner notified']);
+        return response()->json(['data' => Auth::user()->refresh()]);
     }
 
     /**
@@ -95,8 +93,24 @@ class PartnersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Partners $partners)
+    public function destroy(Partners $partner, Request $request)
     {
-        //
+        $sessionId = $partner->session_id;
+        $session = StudySession::find($sessionId);
+        $userId = $partner->partner_id;
+
+        $waitingRoom = WaitingRoom::where(['session_id' => $sessionId])->first();
+        $waiters = $waitingRoom->waiters ?? [];
+
+        $waitersUpdated = collect($waitingRoom->waiters)->reject(function($waiter) use($userId){
+            return $waiter['id'] === $userId;
+        })->all();
+        $waitingRoom->waiters = $waitersUpdated;
+        $waitingRoom->save();
+
+        PartnerLeaved::dispatch($session);
+
+        $partner->delete();
+        return response()->json(["data" => Auth::user()->refresh()]);
     }
 }

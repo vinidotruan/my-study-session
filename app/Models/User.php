@@ -53,6 +53,6 @@ class User extends Authenticatable
 
     public function followedSessions(): BelongsToMany
     {
-        return $this->belongsToMany(StudySession::class, Partners::class, 'partner_id', 'session_id');
+        return $this->belongsToMany(StudySession::class, Partners::class, 'partner_id', 'session_id')->withPivot('id');
     }
 }

@@ -16,9 +16,8 @@ class PartnerEntered implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(
-        private readonly StudySession $session
-    ){
+    public function __construct(private readonly StudySession $session)
+    {
     }
 
     /**

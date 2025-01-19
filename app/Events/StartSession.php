@@ -43,9 +43,8 @@ class StartSession implements ShouldBroadcast
     public function broadcastWith(): array
     {
         FinalizeSession::dispatch($this->user, $this->studySession)
-            /* ->delay(now()->addMinutes($this->studySession->minutes)); */
             ->delay(now()->addSeconds(5));
 
-        return [];
+        return $this->studySession->toArray();
     }
 }
