@@ -13,6 +13,7 @@ Route::get("auth/url", [TwitchController::class, 'getAuthUrl']);
 Route::middleware('auth:sanctum')->group(function() {
     Route::prefix('sessions')->group(function () {
         Route::post('', [StudySessionController::class, 'store']);
+        Route::delete('{studySession}', [StudySessionController::class, 'destroy']);
         Route::post('{id}/start', [StudySessionController::class, 'start']);
         Route::get('{studySession:uri}', [StudySessionController::class, 'show']);
         Route::get('', [StudySessionController::class, 'index']);

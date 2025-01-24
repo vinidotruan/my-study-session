@@ -59,6 +59,8 @@ class StudySessionController extends Controller
      */
     public function destroy(StudySession $studySession): JsonResponse
     {
+        $studySession->partners()->delete();
+        $studySession->waitingRoom()->delete();
         $studySession->delete();
         return $this->index();
     }
